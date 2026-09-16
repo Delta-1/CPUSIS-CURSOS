@@ -2,710 +2,474 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071525">
-  <meta name="description" content="Formulário de pré-inscrição empresarial para o pacote de cursos fiscais CPUSIS.">
-  <title>CPUSIS Cursos | Pré-inscrição empresarial</title>
+  <meta name="description" content="Pacote empresarial CPUSIS com oito cursos fiscais e curso bônus.">
+  <title>CPUSIS Cursos | Formação fiscal para empresas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy-950: #06111f;
-      --navy-900: #091b2e;
-      --navy-800: #102942;
-      --navy-700: #173a5a;
-      --ink: #0b1b2a;
-      --muted: #637181;
-      --line: #dce2e8;
-      --paper: #f5f5f2;
-      --white: #ffffff;
-      --yellow: #f2c84b;
-      --yellow-soft: #fff5cd;
-      --danger: #b42318;
-      --success: #176447;
-      --radius: 18px;
+      --navy-950:#06111f; --navy-900:#091b2e; --navy-800:#102942;
+      --navy-700:#173a5a; --ink:#0b1b2a; --muted:#637181;
+      --line:#dde3e8; --paper:#f3f4f1; --white:#fff;
+      --yellow:#f2c84b; --yellow-soft:#fff4c8; --danger:#b42318;
     }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-width:320px; color:var(--ink); font-family:"DM Sans",sans-serif; background:var(--paper); }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    a { color:inherit; text-decoration:none; }
+    .hidden { display:none!important; }
 
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      font-family: "DM Sans", sans-serif;
-      background: var(--navy-950);
+    .hero {
+      position:relative; min-height:100svh; isolation:isolate; overflow:hidden;
+      color:var(--white); background:var(--navy-950);
     }
-
-    button, input, select { font: inherit; }
-
-    .page {
-      position: relative;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 36px;
-      isolation: isolate;
-      overflow: hidden;
-    }
-
-    .page::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -3;
+    .hero::before {
+      content:""; position:absolute; inset:0; z-index:-3;
       background:
-        linear-gradient(90deg, rgba(4, 14, 27, .2), rgba(4, 14, 27, .76) 56%, rgba(4, 14, 27, .94)),
-        url("lighthouse-bg.jpg") center / cover no-repeat;
+        linear-gradient(90deg,rgba(4,13,25,.24),rgba(4,13,25,.67) 52%,rgba(4,13,25,.93)),
+        url("lighthouse-bg.jpg") center/cover no-repeat;
     }
-
-    .page::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 74% 35%, rgba(242, 200, 75, .09), transparent 28%),
-        linear-gradient(180deg, transparent 60%, rgba(2, 10, 19, .54));
+    .hero::after {
+      content:""; position:absolute; inset:0; z-index:-2;
+      background:linear-gradient(180deg,rgba(5,17,31,.2),rgba(5,17,31,.24) 62%,var(--navy-950));
     }
-
-    .shell {
-      width: min(1180px, 100%);
-      display: grid;
-      grid-template-columns: minmax(280px, .72fr) minmax(600px, 1.28fr);
-      border: 1px solid rgba(255, 255, 255, .18);
-      border-radius: 28px;
-      background: rgba(7, 21, 37, .52);
-      box-shadow: 0 38px 110px rgba(0, 0, 0, .46);
-      backdrop-filter: blur(16px);
-      overflow: hidden;
+    .nav {
+      width:min(1240px,calc(100% - 48px)); margin:auto; padding:24px 0;
+      display:flex; align-items:center; justify-content:space-between; gap:22px;
     }
-
-    .context {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 760px;
-      padding: 42px 40px;
-      color: var(--white);
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      width: fit-content;
-      color: var(--white);
-      font: 800 1.05rem "Manrope", sans-serif;
-      letter-spacing: -.02em;
-    }
-
+    .brand { display:flex; align-items:center; gap:11px; font:800 1.05rem "Manrope",sans-serif; }
     .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(255, 255, 255, .28);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, .1);
-      color: var(--yellow);
+      display:grid; place-items:center; width:39px; height:39px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1); color:var(--yellow);
     }
+    .brand-mark svg { width:21px; }
+    .nav-note { color:rgba(255,255,255,.66); font-size:.78rem; }
 
-    .brand-mark svg { width: 21px; }
-
-    .context-copy { max-width: 380px; }
-
+    .hero-content {
+      width:min(1240px,calc(100% - 48px)); min-height:calc(100svh - 92px); margin:auto;
+      padding:60px 0 100px; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(350px,.62fr);
+      align-items:center; gap:clamp(48px,8vw,120px);
+    }
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      color: var(--yellow);
-      font-size: .74rem;
-      font-weight: 700;
-      letter-spacing: .13em;
-      text-transform: uppercase;
+      display:inline-flex; align-items:center; gap:9px; color:var(--yellow);
+      font-size:.76rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
     }
-
-    .eyebrow::before {
-      content: "";
-      width: 22px;
-      height: 2px;
-      background: var(--yellow);
-    }
-
+    .eyebrow::before { content:""; width:24px; height:2px; background:var(--yellow); }
     h1 {
-      margin: 0;
-      max-width: 440px;
-      color: var(--white);
-      font: 800 clamp(2.25rem, 4.3vw, 4.2rem)/1.02 "Manrope", sans-serif;
-      letter-spacing: -.055em;
+      max-width:780px; margin:20px 0 24px; font:800 clamp(3rem,6.3vw,6.3rem)/.96 "Manrope",sans-serif;
+      letter-spacing:-.065em;
     }
-
-    .context-copy > p {
-      max-width: 380px;
-      margin: 20px 0 0;
-      color: rgba(239, 244, 248, .76);
-      font-size: 1rem;
-      line-height: 1.65;
+    h1 span { color:var(--yellow); }
+    .hero-lead { max-width:680px; margin:0; color:rgba(241,245,248,.78); font-size:clamp(1rem,1.5vw,1.22rem); line-height:1.7; }
+    .hero-badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .hero-badges span {
+      padding:9px 12px; border:1px solid rgba(255,255,255,.16); border-radius:999px;
+      background:rgba(255,255,255,.07); color:#e5edf2; font-size:.76rem; font-weight:700;
     }
-
-    .offer {
-      display: grid;
-      gap: 10px;
-      padding-top: 26px;
-      border-top: 1px solid rgba(255, 255, 255, .18);
+    .offer-card {
+      padding:34px; border:1px solid rgba(255,255,255,.2); border-radius:24px;
+      background:rgba(7,23,40,.63); box-shadow:0 30px 80px rgba(0,0,0,.34); backdrop-filter:blur(15px);
     }
-
-    .offer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      color: rgba(255, 255, 255, .72);
-      font-size: .78rem;
+    .offer-label { color:var(--yellow); font-size:.72rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .old-price { margin-top:25px; color:rgba(255,255,255,.58); font-size:1rem; }
+    .old-price s { text-decoration-thickness:2px; text-decoration-color:#e08d82; }
+    .price-note { margin-top:14px; color:rgba(255,255,255,.72); font-size:.82rem; }
+    .price { margin:4px 0 12px; font:800 clamp(3.15rem,5vw,4.7rem)/1 "Manrope",sans-serif; letter-spacing:-.065em; }
+    .price small { font-size:.4em; vertical-align:42%; }
+    .installments { color:#d8e3e9; line-height:1.5; }
+    .saving {
+      margin:22px 0 15px; padding:12px 14px; border-radius:10px;
+      background:var(--yellow); color:#2e290c; font-size:.8rem; font-weight:800; text-align:center;
     }
-
-    .offer-row strong { color: var(--white); font-size: .86rem; }
-
-    .spots {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      width: fit-content;
-      margin-top: 6px;
-      padding: 8px 11px;
-      border: 1px solid rgba(242, 200, 75, .28);
-      border-radius: 999px;
-      background: rgba(242, 200, 75, .09);
-      color: var(--yellow);
-      font-size: .72rem;
-      font-weight: 700;
+    .cta {
+      width:100%; min-height:54px; border:0; border-radius:12px; background:var(--white);
+      color:var(--navy-900); font-weight:800; box-shadow:0 12px 30px rgba(0,0,0,.18);
+      transition:transform .18s,background .18s;
     }
+    .cta:hover { transform:translateY(-2px); background:#fff9df; }
+    .microcopy { margin:12px 0 0; color:rgba(255,255,255,.52); font-size:.68rem; text-align:center; }
 
-    .spots::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--yellow);
-      box-shadow: 0 0 0 5px rgba(242, 200, 75, .13);
+    .courses { padding:105px max(24px,calc((100% - 1240px)/2)); background:var(--paper); }
+    .section-heading { display:grid; grid-template-columns:1fr .68fr; gap:55px; align-items:end; margin-bottom:42px; }
+    .section-kicker { color:var(--navy-700); font-size:.75rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    h2 { margin:10px 0 0; font:800 clamp(2rem,4vw,4rem)/1.05 "Manrope",sans-serif; letter-spacing:-.05em; }
+    .section-heading p { margin:0; color:var(--muted); line-height:1.7; }
+    .course-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .course {
+      min-height:170px; padding:22px; display:flex; flex-direction:column; border:1px solid var(--line);
+      border-radius:16px; background:var(--white); box-shadow:0 10px 25px rgba(8,29,47,.035);
     }
-
-    .form-panel {
-      padding: 40px;
-      background: rgba(247, 248, 246, .98);
+    .course-number { color:#a0aab3; font-size:.7rem; font-weight:800; letter-spacing:.12em; }
+    .course h3 { margin:auto 0 12px; font:700 1rem/1.4 "Manrope",sans-serif; }
+    .course span:last-child { color:var(--navy-700); font-size:.68rem; font-weight:700; }
+    .bonus {
+      margin-top:14px; padding:24px 26px; display:flex; align-items:center; justify-content:space-between; gap:25px;
+      border-radius:16px; background:var(--navy-900); color:var(--white);
     }
+    .bonus strong { color:var(--yellow); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; }
+    .bonus h3 { margin:5px 0 0; font:700 1.2rem "Manrope",sans-serif; }
+    .bonus span { color:#bed0da; font-size:.78rem; }
 
-    .form-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 28px;
+    .close {
+      position:fixed; top:18px; right:18px; z-index:30; width:43px; height:43px; border:1px solid rgba(255,255,255,.22);
+      border-radius:50%; background:rgba(5,17,31,.8); color:var(--white); font-size:1.5rem; backdrop-filter:blur(10px);
     }
-
-    .form-header span {
-      display: block;
-      margin-bottom: 7px;
-      color: var(--navy-700);
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .11em;
-      text-transform: uppercase;
+    .flow {
+      position:fixed; inset:0; z-index:20; overflow:auto; padding:45px 20px;
+      background:linear-gradient(rgba(4,14,27,.82),rgba(4,14,27,.94)),url("lighthouse-bg.jpg") center/cover fixed;
     }
-
-    h2 {
-      margin: 0;
-      color: var(--ink);
-      font: 800 clamp(1.55rem, 2.3vw, 2.15rem)/1.15 "Manrope", sans-serif;
-      letter-spacing: -.035em;
+    .form-shell {
+      width:min(850px,100%); margin:auto; border-radius:24px; overflow:hidden;
+      background:#f8f8f5; box-shadow:0 35px 110px rgba(0,0,0,.45);
     }
-
-    .step-pill {
-      flex: 0 0 auto;
-      padding: 8px 11px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--white);
-      color: var(--muted);
-      font-size: .72rem;
-      font-weight: 700;
+    .form-top { padding:32px 38px 26px; background:var(--navy-900); color:var(--white); }
+    .form-top-row { display:flex; justify-content:space-between; align-items:start; gap:20px; }
+    .form-top h2 { margin:7px 0 0; font-size:clamp(1.7rem,3vw,2.45rem); }
+    .form-top p { margin:9px 0 0; color:#b9cbd5; line-height:1.5; }
+    .step-count { flex:0 0 auto; padding:7px 10px; border:1px solid rgba(255,255,255,.17); border-radius:999px; color:#d5e0e6; font-size:.7rem; }
+    .progress { height:4px; margin-top:25px; border-radius:4px; overflow:hidden; background:rgba(255,255,255,.12); }
+    .progress i { display:block; width:33.333%; height:100%; background:var(--yellow); transition:width .25s; }
+    .form-body { padding:34px 38px 38px; }
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-title { margin-bottom:22px; }
+    .step-title span { color:var(--navy-700); font-size:.71rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .step-title h3 { margin:5px 0 0; font:800 1.48rem "Manrope",sans-serif; letter-spacing:-.03em; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; }
+    .field { display:grid; gap:7px; }
+    .field.full { grid-column:1/-1; }
+    label { color:#3d4d5a; font-size:.78rem; font-weight:700; }
+    input,select {
+      width:100%; height:48px; padding:0 13px; border:1px solid #d3dbe1; border-radius:10px;
+      outline:none; background:var(--white); color:var(--ink);
     }
-
-    fieldset {
-      margin: 0;
-      padding: 0;
-      border: 0;
+    input:focus,select:focus { border-color:var(--navy-700); box-shadow:0 0 0 3px rgba(23,58,90,.1); }
+    input::placeholder { color:#a3abb2; }
+    .employee {
+      padding:20px; border:1px solid var(--line); border-radius:15px; background:var(--white);
     }
-
-    legend {
-      width: 100%;
-      margin-bottom: 17px;
-      padding: 0 0 11px;
-      border-bottom: 1px solid var(--line);
-      color: var(--navy-800);
-      font: 700 .86rem "Manrope", sans-serif;
+    .employee+.employee { margin-top:14px; }
+    .employee-title { margin-bottom:15px; color:var(--navy-800); font:700 .82rem "Manrope",sans-serif; }
+    .employee-title b {
+      display:inline-grid; place-items:center; width:25px; height:25px; margin-right:8px; border-radius:7px;
+      background:var(--yellow-soft); color:#7c6206; font-size:.68rem;
     }
-
-    fieldset + fieldset { margin-top: 28px; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
+    .review { display:grid; gap:10px; padding:19px; border:1px solid var(--line); border-radius:14px; background:var(--white); }
+    .review-row { display:flex; justify-content:space-between; gap:18px; color:var(--muted); font-size:.82rem; }
+    .review-row strong { color:var(--ink); text-align:right; }
+    .review-price { margin-top:8px; padding-top:15px; border-top:1px solid var(--line); font-size:.95rem; }
+    .review-price strong { color:var(--navy-800); font-size:1.35rem; }
+    .consent { display:flex; gap:10px; align-items:flex-start; margin-top:18px; }
+    .consent input { width:17px; height:17px; margin-top:2px; accent-color:var(--navy-800); }
+    .consent label { color:var(--muted); font-size:.73rem; font-weight:500; line-height:1.45; }
+    .actions { display:flex; justify-content:space-between; gap:12px; margin-top:26px; }
+    .btn {
+      min-height:48px; padding:0 20px; border-radius:11px; border:1px solid var(--line); font-weight:800;
     }
+    .btn-back { background:var(--white); color:var(--navy-800); }
+    .btn-next { margin-left:auto; border-color:var(--navy-900); background:var(--navy-900); color:var(--white); }
+    .btn-pay { flex:1; border-color:var(--yellow); background:var(--yellow); color:#2e290c; }
+    .error { display:none; margin-top:17px; padding:11px 13px; border-radius:9px; background:#fff0ee; color:var(--danger); font-size:.76rem; font-weight:700; }
+    .loading { opacity:.7; pointer-events:none; }
 
-    .field {
-      display: grid;
-      gap: 7px;
+    .payment-result {
+      min-height:100svh; padding:35px 20px; display:grid; place-items:center; color:var(--white);
+      background:linear-gradient(rgba(4,14,27,.78),rgba(4,14,27,.94)),url("lighthouse-bg.jpg") center/cover;
     }
-
-    .field.full { grid-column: 1 / -1; }
-
-    label {
-      color: #394b5b;
-      font-size: .78rem;
-      font-weight: 700;
+    .result-card {
+      width:min(590px,100%); padding:45px; border:1px solid rgba(255,255,255,.18); border-radius:24px;
+      background:rgba(7,25,43,.84); text-align:center; box-shadow:0 30px 90px rgba(0,0,0,.42); backdrop-filter:blur(15px);
     }
+    .result-icon { display:grid; place-items:center; width:70px; height:70px; margin:0 auto 22px; border-radius:50%; background:var(--yellow); color:var(--navy-900); font-size:2rem; font-weight:800; }
+    .result-card h2 { color:var(--white); }
+    .result-card p { color:#c5d3dc; line-height:1.7; }
+    .result-card a { display:inline-flex; margin-top:13px; padding:13px 18px; border-radius:10px; background:var(--white); color:var(--navy-900); font-weight:800; }
 
-    .optional {
-      margin-left: 5px;
-      color: #83909b;
-      font-size: .68rem;
-      font-weight: 500;
+    footer { padding:28px 24px; background:var(--navy-950); color:#8fa4b1; font-size:.74rem; text-align:center; }
+
+    @media(max-width:1000px) {
+      .hero-content { grid-template-columns:1fr; padding-top:45px; }
+      .offer-card { max-width:570px; }
+      .course-grid { grid-template-columns:repeat(2,1fr); }
     }
-
-    input, select {
-      width: 100%;
-      height: 47px;
-      border: 1px solid #d5dce2;
-      border-radius: 11px;
-      outline: none;
-      background: var(--white);
-      color: var(--ink);
-      padding: 0 13px;
-      transition: border-color .18s, box-shadow .18s;
+    @media(max-width:680px) {
+      .nav,.hero-content { width:min(100% - 32px,1240px); }
+      .nav-note { display:none; }
+      .hero-content { padding-bottom:75px; }
+      h1 { font-size:clamp(2.8rem,15vw,4.6rem); }
+      .offer-card { padding:26px 22px; }
+      .courses { padding:75px 16px; }
+      .section-heading { grid-template-columns:1fr; gap:18px; }
+      .course-grid { grid-template-columns:1fr; }
+      .course { min-height:145px; }
+      .bonus { align-items:flex-start; flex-direction:column; }
+      .flow { padding:0; }
+      .close { top:12px; right:12px; }
+      .form-shell { min-height:100svh; border-radius:0; }
+      .form-top,.form-body { padding-left:20px; padding-right:20px; }
+      .form-top { padding-top:65px; }
+      .form-top-row { flex-direction:column-reverse; }
+      .step-count { align-self:flex-end; }
+      .grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+      .employee { padding:16px; }
+      .actions { flex-wrap:wrap; }
+      .btn-pay { flex-basis:100%; order:-1; }
+      .result-card { padding:35px 22px; }
     }
-
-    input::placeholder { color: #a1aab2; }
-
-    input:focus, select:focus {
-      border-color: var(--navy-700);
-      box-shadow: 0 0 0 3px rgba(23, 58, 90, .1);
-    }
-
-    .participant {
-      padding: 17px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fbfbf9;
-    }
-
-    .participant + .participant { margin-top: 12px; }
-
-    .participant-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 13px;
-      color: var(--navy-800);
-      font-size: .76rem;
-      font-weight: 700;
-    }
-
-    .participant-title i {
-      display: grid;
-      place-items: center;
-      width: 23px;
-      height: 23px;
-      border-radius: 7px;
-      background: var(--yellow-soft);
-      color: #8a6900;
-      font-style: normal;
-      font-size: .68rem;
-    }
-
-    .consent {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 19px;
-    }
-
-    .consent input {
-      width: 17px;
-      height: 17px;
-      margin: 2px 0 0;
-      accent-color: var(--navy-800);
-    }
-
-    .consent label {
-      color: var(--muted);
-      font-size: .72rem;
-      font-weight: 500;
-      line-height: 1.45;
-    }
-
-    .submit {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      min-height: 51px;
-      margin-top: 22px;
-      border: 0;
-      border-radius: 12px;
-      cursor: pointer;
-      background: var(--navy-900);
-      color: var(--white);
-      box-shadow: 0 13px 25px rgba(9, 27, 46, .16);
-      font-weight: 700;
-      transition: transform .18s, background .18s;
-    }
-
-    .submit:hover { transform: translateY(-1px); background: var(--navy-800); }
-    .submit:active { transform: translateY(0); }
-    .submit svg { width: 18px; }
-
-    .helper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      margin: 11px 0 0;
-      color: #7c8893;
-      font-size: .67rem;
-    }
-
-    .helper svg { width: 13px; }
-
-    .error {
-      display: none;
-      margin: 15px 0 0;
-      padding: 11px 13px;
-      border-radius: 9px;
-      background: #fff0ee;
-      color: var(--danger);
-      font-size: .76rem;
-      font-weight: 600;
-    }
-
-    .success {
-      display: none;
-      min-height: 640px;
-      place-items: center;
-      text-align: center;
-    }
-
-    .success.visible { display: grid; }
-    .success-inner { max-width: 480px; }
-
-    .success-icon {
-      display: grid;
-      place-items: center;
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 22px;
-      border-radius: 50%;
-      background: var(--yellow-soft);
-      color: #8a6900;
-    }
-
-    .success-icon svg { width: 31px; }
-    .success p { color: var(--muted); line-height: 1.65; }
-
-    .secondary-button {
-      min-height: 44px;
-      margin-top: 18px;
-      padding: 0 18px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      cursor: pointer;
-      background: var(--white);
-      color: var(--navy-800);
-      font-weight: 700;
-    }
-
-    @media (max-width: 960px) {
-      .page { padding: 22px; }
-      .shell { grid-template-columns: 1fr; width: min(700px, 100%); }
-      .context { min-height: 350px; padding: 32px; }
-      .context-copy { margin: 52px 0; }
-      .offer { grid-template-columns: 1fr 1fr; gap: 12px 25px; }
-      .spots { grid-column: 1 / -1; }
-    }
-
-    @media (max-width: 620px) {
-      .page { display: block; padding: 0; }
-      .page::before {
-        background:
-          linear-gradient(180deg, rgba(4, 14, 27, .1), rgba(4, 14, 27, .88)),
-          url("lighthouse-bg.jpg") 28% center / cover no-repeat;
-      }
-      .shell { border: 0; border-radius: 0; box-shadow: none; }
-      .context { min-height: 410px; padding: 25px 21px; }
-      .context-copy { margin: 58px 0 38px; }
-      h1 { max-width: 330px; font-size: 2.65rem; }
-      .context-copy > p { font-size: .91rem; }
-      .offer { grid-template-columns: 1fr; }
-      .form-panel { padding: 30px 19px 38px; }
-      .form-header { align-items: flex-start; flex-direction: column-reverse; gap: 12px; }
-      .grid { grid-template-columns: 1fr; }
-      .field.full { grid-column: auto; }
-      .participant { padding: 15px; }
-      .step-pill { align-self: flex-end; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; transition: none !important; }
-    }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition:none!important; } }
   </style>
 </head>
 <body>
-  <main class="page">
-    <section class="shell" aria-label="Formulário de pré-inscrição">
-      <aside class="context">
-        <div class="brand">
+  <div id="site">
+    <section class="hero">
+      <nav class="nav">
+        <a class="brand" href="#" aria-label="CPUSIS Cursos">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M8 21h8M9 21l1-11h4l1 11M10 10V7h4v3M9 7h6l-1-4h-4L9 7Z"/>
-              <path d="M14 7l6-2M14 9l7 1M10 7L4 5"/>
+              <path d="M14 7l6-2M14 9l7 1M10 7 4 5"/>
             </svg>
           </span>
           CPUSIS Cursos
-        </div>
+        </a>
+        <span class="nav-note">Condição exclusiva para empresas clientes</span>
+      </nav>
 
-        <div class="context-copy">
-          <span class="eyebrow">Inscrição empresarial</span>
-          <h1>Conhecimento que orienta decisões.</h1>
-          <p>Cadastre sua empresa no pacote de formação fiscal e prepare sua equipe para atuar com mais segurança.</p>
-        </div>
-
-        <div class="offer">
-          <div class="offer-row"><span>Investimento</span><strong>R$ 872,55</strong></div>
-          <div class="offer-row"><span>Pagamento</span><strong>até 4x sem juros</strong></div>
-          <div class="offer-row"><span>Participantes</span><strong>2 CPFs por CNPJ</strong></div>
-          <div class="offer-row"><span>Conteúdo</span><strong>8 cursos + bônus</strong></div>
-          <span class="spots">Apenas 40 vagas</span>
-        </div>
-      </aside>
-
-      <section class="form-panel">
-        <div id="form-content">
-          <header class="form-header">
-            <div>
-              <span>Pré-inscrição</span>
-              <h2>Dados da empresa e participantes</h2>
-            </div>
-            <div class="step-pill">Leva menos de 2 min</div>
-          </header>
-
-          <form id="registration-form" novalidate>
-            <fieldset>
-              <legend>Empresa</legend>
-              <div class="grid">
-                <div class="field full">
-                  <label for="company">Razão social ou nome fantasia</label>
-                  <input id="company" name="company" autocomplete="organization" required>
-                </div>
-                <div class="field">
-                  <label for="cnpj">CNPJ</label>
-                  <input id="cnpj" name="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18" required>
-                </div>
-                <div class="field">
-                  <label for="responsible">Responsável pela inscrição</label>
-                  <input id="responsible" name="responsible" autocomplete="name" required>
-                </div>
-                <div class="field">
-                  <label for="email">E-mail corporativo</label>
-                  <input id="email" name="email" type="email" autocomplete="email" placeholder="nome@empresa.com.br" required>
-                </div>
-                <div class="field">
-                  <label for="whatsapp">WhatsApp</label>
-                  <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" required>
-                </div>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>Participantes</legend>
-              <div class="participant">
-                <div class="participant-title"><i>01</i> Participante principal</div>
-                <div class="grid">
-                  <div class="field">
-                    <label for="participant1">Nome completo</label>
-                    <input id="participant1" name="participant1" autocomplete="name" required>
-                  </div>
-                  <div class="field">
-                    <label for="cpf1">CPF</label>
-                    <input id="cpf1" name="cpf1" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="participant">
-                <div class="participant-title"><i>02</i> Segundo participante <span class="optional">opcional</span></div>
-                <div class="grid">
-                  <div class="field">
-                    <label for="participant2">Nome completo</label>
-                    <input id="participant2" name="participant2">
-                  </div>
-                  <div class="field">
-                    <label for="cpf2">CPF</label>
-                    <input id="cpf2" name="cpf2" inputmode="numeric" placeholder="000.000.000-00" maxlength="14">
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>Pagamento</legend>
-              <div class="field">
-                <label for="payment">Como prefere pagar?</label>
-                <select id="payment" name="payment" required>
-                  <option value="">Selecione uma opção</option>
-                  <option>Cartão em 1x</option>
-                  <option>Cartão em 2x sem juros</option>
-                  <option>Cartão em 3x sem juros</option>
-                  <option>Cartão em 4x sem juros</option>
-                </select>
-              </div>
-            </fieldset>
-
-            <div class="consent">
-              <input id="consent" name="consent" type="checkbox" required>
-              <label for="consent">Autorizo o contato da equipe CPUSIS sobre esta pré-inscrição e confirmo que os dados informados estão corretos.</label>
-            </div>
-
-            <div class="error" id="error" role="alert"></div>
-
-            <button class="submit" type="submit">
-              Enviar inscrição pelo WhatsApp
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M13 6l6 6-6 6"/>
-              </svg>
-            </button>
-
-            <p class="helper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-              </svg>
-              Seus dados são usados somente para o atendimento desta inscrição.
-            </p>
-          </form>
-        </div>
-
-        <div class="success" id="success" aria-live="polite">
-          <div class="success-inner">
-            <div class="success-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12 4 4L19 6"/></svg>
-            </div>
-            <h2>Inscrição preparada!</h2>
-            <p>O WhatsApp foi aberto com todos os dados preenchidos. Escolha o contato da CPUSIS e envie a mensagem para concluir.</p>
-            <button class="secondary-button" id="new-registration" type="button">Fazer nova inscrição</button>
+      <div class="hero-content">
+        <div>
+          <span class="eyebrow">Formação fiscal empresarial</span>
+          <h1>Mais preparo para <span>decisões seguras.</span></h1>
+          <p class="hero-lead">Uma trilha com oito cursos fiscais para capacitar dois funcionários da sua empresa, com conteúdo prático e uma condição especial.</p>
+          <div class="hero-badges">
+            <span>8 cursos</span><span>2 funcionários por CNPJ</span><span>Curso bônus</span><span>40 vagas</span>
           </div>
         </div>
-      </section>
+
+        <aside class="offer-card">
+          <span class="offer-label">Oportunidade limitada</span>
+          <div class="old-price">De <s>R$ 6.576,00</s></div>
+          <div class="price-note">por apenas</div>
+          <div class="price"><small>R$</small> 872<small>,55</small></div>
+          <div class="installments">em até <strong>4x sem juros</strong> no cartão</div>
+          <div class="saving">Você economiza R$ 5.703,45</div>
+          <button class="cta" id="open-form" type="button">Aproveitar oportunidade</button>
+          <p class="microcopy">Ao continuar, você cadastrará a empresa e os dois participantes.</p>
+        </aside>
+      </div>
     </section>
-  </main>
+
+    <section class="courses">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Conteúdo da formação</span>
+          <h2>Os cursos incluídos</h2>
+        </div>
+        <p>Conteúdos organizados para apoiar a rotina fiscal, desde os fundamentos até a preparação para a Reforma Tributária.</p>
+      </div>
+      <div class="course-grid">
+        <article class="course"><span class="course-number">01</span><h3>CFOP nas operações fiscais</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">02</span><h3>CFOP: Código Fiscal de Operações e Prestações</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">03</span><h3>Nota fiscal de garantia</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">04</span><h3>Formação de Analista Fiscal</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">05</span><h3>Introdução à área fiscal</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">06</span><h3>Faturamento e emissão de notas fiscais</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">07</span><h3>Classificação fiscal e descrição de mercadorias</h3><span>Incluso no pacote</span></article>
+        <article class="course"><span class="course-number">08</span><h3>Plano de Implementação da Reforma Tributária</h3><span>Incluso no pacote</span></article>
+      </div>
+      <div class="bonus"><div><strong>Presente especial</strong><h3>Curso bônus</h3></div><span>Liberado junto com a formação, sem custo adicional.</span></div>
+    </section>
+    <footer>CPUSIS Cursos · Formação empresarial com clareza e direção</footer>
+  </div>
+
+  <section class="flow hidden" id="flow" aria-label="Cadastro para pagamento">
+    <button class="close" id="close-form" type="button" aria-label="Fechar formulário">×</button>
+    <div class="form-shell">
+      <header class="form-top">
+        <div class="form-top-row">
+          <div>
+            <span class="eyebrow">Pré-inscrição empresarial</span>
+            <h2>Cadastre a empresa e os participantes</h2>
+            <p>Os dados serão vinculados ao pagamento e usados para o envio dos acessos.</p>
+          </div>
+          <span class="step-count" id="step-count">Etapa 1 de 3</span>
+        </div>
+        <div class="progress"><i id="progress-bar"></i></div>
+      </header>
+
+      <form class="form-body" id="registration-form" novalidate>
+        <section class="step active" data-step="1">
+          <div class="step-title"><span>Etapa 01</span><h3>Dados da empresa</h3></div>
+          <div class="grid">
+            <div class="field full"><label for="company_name">Razão social ou nome fantasia</label><input id="company_name" name="company_name" autocomplete="organization" required></div>
+            <div class="field"><label for="cnpj">CNPJ</label><input id="cnpj" name="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" required></div>
+            <div class="field"><label for="owner_name">Nome do responsável</label><input id="owner_name" name="owner_name" autocomplete="name" required></div>
+            <div class="field"><label for="owner_email">E-mail principal para contato</label><input id="owner_email" name="owner_email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="owner_phone">Telefone/WhatsApp do responsável</label><input id="owner_phone" name="owner_phone" type="tel" inputmode="tel" maxlength="15" required></div>
+          </div>
+          <div class="actions"><button class="btn btn-next" type="button" data-next>Continuar</button></div>
+        </section>
+
+        <section class="step" data-step="2">
+          <div class="step-title"><span>Etapa 02</span><h3>Dados dos dois funcionários</h3></div>
+          <div class="employee">
+            <div class="employee-title"><b>01</b> Primeiro funcionário</div>
+            <div class="grid">
+              <div class="field full"><label for="employee1_name">Nome completo</label><input id="employee1_name" name="employee1_name" required></div>
+              <div class="field"><label for="employee1_cpf">CPF</label><input id="employee1_cpf" name="employee1_cpf" inputmode="numeric" maxlength="14" required></div>
+              <div class="field"><label for="employee1_email">E-mail</label><input id="employee1_email" name="employee1_email" type="email" required></div>
+              <div class="field"><label for="employee1_phone">Telefone/WhatsApp</label><input id="employee1_phone" name="employee1_phone" type="tel" inputmode="tel" maxlength="15" required></div>
+            </div>
+          </div>
+          <div class="employee">
+            <div class="employee-title"><b>02</b> Segundo funcionário</div>
+            <div class="grid">
+              <div class="field full"><label for="employee2_name">Nome completo</label><input id="employee2_name" name="employee2_name" required></div>
+              <div class="field"><label for="employee2_cpf">CPF</label><input id="employee2_cpf" name="employee2_cpf" inputmode="numeric" maxlength="14" required></div>
+              <div class="field"><label for="employee2_email">E-mail</label><input id="employee2_email" name="employee2_email" type="email" required></div>
+              <div class="field"><label for="employee2_phone">Telefone/WhatsApp</label><input id="employee2_phone" name="employee2_phone" type="tel" inputmode="tel" maxlength="15" required></div>
+            </div>
+          </div>
+          <div class="actions"><button class="btn btn-back" type="button" data-back>Voltar</button><button class="btn btn-next" type="button" data-next>Revisar dados</button></div>
+        </section>
+
+        <section class="step" data-step="3">
+          <div class="step-title"><span>Etapa 03</span><h3>Revise e prossiga para o pagamento</h3></div>
+          <div class="review" id="review"></div>
+          <div class="consent"><input id="consent" type="checkbox" required><label for="consent">Confirmo que os dados estão corretos e autorizo seu uso para processar a compra e enviar os acessos aos cursos.</label></div>
+          <div class="error" id="form-error" role="alert"></div>
+          <div class="actions"><button class="btn btn-back" type="button" data-back>Voltar</button><button class="btn btn-pay" id="payment-button" type="submit">Prosseguir para pagamento seguro</button></div>
+        </section>
+      </form>
+    </div>
+  </section>
+
+  <section class="payment-result hidden" id="payment-result">
+    <div class="result-card">
+      <div class="result-icon" id="result-icon">✓</div>
+      <span class="eyebrow" id="result-kicker">Pagamento confirmado</span>
+      <h2 id="result-title">Sua inscrição foi concluída!</h2>
+      <p id="result-text">Os links de acesso à plataforma serão enviados para os e-mails e telefones informados no cadastro.</p>
+      <a href="./">Voltar ao início</a>
+    </div>
+  </section>
 
   <script>
+    const CREATE_PAYMENT_URL = "SUPABASE_CREATE_PAYMENT_URL";
+    const PAYMENT_STATUS_URL = "SUPABASE_PAYMENT_STATUS_URL";
     const form = document.querySelector("#registration-form");
-    const errorBox = document.querySelector("#error");
-    const formContent = document.querySelector("#form-content");
-    const success = document.querySelector("#success");
+    const flow = document.querySelector("#flow");
+    const site = document.querySelector("#site");
+    const steps = [...document.querySelectorAll(".step")];
+    const errorBox = document.querySelector("#form-error");
+    let currentStep = 1;
 
-    function onlyDigits(value) {
-      return value.replace(/\D/g, "");
+    function digits(value){ return value.replace(/\D/g,""); }
+    function formatCnpj(value){
+      return digits(value).slice(0,14).replace(/^(\d{2})(\d)/,"$1.$2").replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3").replace(/\.(\d{3})(\d)/,".$1/$2").replace(/(\d{4})(\d)/,"$1-$2");
     }
-
-    function formatCnpj(value) {
-      const digits = onlyDigits(value).slice(0, 14);
-      return digits
-        .replace(/^(\d{2})(\d)/, "$1.$2")
-        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
-        .replace(/\.(\d{3})(\d)/, ".$1/$2")
-        .replace(/(\d{4})(\d)/, "$1-$2");
+    function formatCpf(value){
+      return digits(value).slice(0,11).replace(/^(\d{3})(\d)/,"$1.$2").replace(/^(\d{3})\.(\d{3})(\d)/,"$1.$2.$3").replace(/\.(\d{3})(\d)/,".$1-$2");
     }
-
-    function formatCpf(value) {
-      const digits = onlyDigits(value).slice(0, 11);
-      return digits
-        .replace(/^(\d{3})(\d)/, "$1.$2")
-        .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
-        .replace(/\.(\d{3})(\d)/, ".$1-$2");
+    function formatPhone(value){
+      const d=digits(value).slice(0,11);
+      return d.length<=10?d.replace(/^(\d{2})(\d)/,"($1) $2").replace(/(\d{4})(\d)/,"$1-$2"):d.replace(/^(\d{2})(\d)/,"($1) $2").replace(/(\d{5})(\d)/,"$1-$2");
     }
+    document.querySelector("#cnpj").addEventListener("input",e=>e.target.value=formatCnpj(e.target.value));
+    ["#employee1_cpf","#employee2_cpf"].forEach(s=>document.querySelector(s).addEventListener("input",e=>e.target.value=formatCpf(e.target.value)));
+    ["#owner_phone","#employee1_phone","#employee2_phone"].forEach(s=>document.querySelector(s).addEventListener("input",e=>e.target.value=formatPhone(e.target.value)));
 
-    function formatPhone(value) {
-      const digits = onlyDigits(value).slice(0, 11);
-      return digits.length <= 10
-        ? digits.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2")
-        : digits.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2");
+    function showStep(number){
+      currentStep=number;
+      steps.forEach(step=>step.classList.toggle("active",Number(step.dataset.step)===number));
+      document.querySelector("#step-count").textContent="Etapa "+number+" de 3";
+      document.querySelector("#progress-bar").style.width=(number/3*100)+"%";
+      errorBox.style.display="none";
+      document.querySelector(".form-shell").scrollIntoView({behavior:"smooth",block:"start"});
     }
+    function validateStep(number){
+      const fields=[...document.querySelector('[data-step="'+number+'"]').querySelectorAll("input,select")];
+      const invalid=fields.find(field=>!field.checkValidity());
+      if(invalid){ invalid.reportValidity(); invalid.focus(); return false; }
+      return true;
+    }
+    function values(){ return Object.fromEntries(new FormData(form).entries()); }
+    function renderReview(){
+      const d=values();
+      document.querySelector("#review").innerHTML=[
+        ["Empresa",d.company_name],["CNPJ",d.cnpj],["Responsável",d.owner_name],
+        ["Funcionário 1",d.employee1_name],["Funcionário 2",d.employee2_name]
+      ].map(([label,value])=>'<div class="review-row"><span>'+label+'</span><strong>'+value+'</strong></div>').join("")+
+      '<div class="review-row review-price"><span>Total da compra</span><strong>R$ 872,55</strong></div>';
+    }
+    document.querySelector("#open-form").addEventListener("click",()=>{ flow.classList.remove("hidden"); document.body.style.overflow="hidden"; });
+    document.querySelector("#close-form").addEventListener("click",()=>{ flow.classList.add("hidden"); document.body.style.overflow=""; });
+    document.querySelectorAll("[data-next]").forEach(button=>button.addEventListener("click",()=>{
+      if(!validateStep(currentStep)) return;
+      if(currentStep===2) renderReview();
+      showStep(currentStep+1);
+    }));
+    document.querySelectorAll("[data-back]").forEach(button=>button.addEventListener("click",()=>showStep(currentStep-1)));
 
-    document.querySelector("#cnpj").addEventListener("input", event => {
-      event.target.value = formatCnpj(event.target.value);
-    });
-
-    ["#cpf1", "#cpf2"].forEach(selector => {
-      document.querySelector(selector).addEventListener("input", event => {
-        event.target.value = formatCpf(event.target.value);
-      });
-    });
-
-    document.querySelector("#whatsapp").addEventListener("input", event => {
-      event.target.value = formatPhone(event.target.value);
-    });
-
-    form.addEventListener("submit", event => {
+    form.addEventListener("submit",async event=>{
       event.preventDefault();
-      errorBox.style.display = "none";
-
-      if (!form.checkValidity()) {
-        errorBox.textContent = "Preencha os campos obrigatórios antes de continuar.";
-        errorBox.style.display = "block";
-        form.reportValidity();
-        return;
+      if(!document.querySelector("#consent").checked){ document.querySelector("#consent").reportValidity(); return; }
+      if(CREATE_PAYMENT_URL.includes("SUPABASE_")){
+        errorBox.textContent="O ambiente de pagamento ainda está sendo configurado. Tente novamente em breve.";
+        errorBox.style.display="block"; return;
       }
-
-      const data = Object.fromEntries(new FormData(form).entries());
-      const secondParticipant = data.participant2
-        ? "\n*Participante 2:* " + data.participant2 + "\n*CPF 2:* " + (data.cpf2 || "Não informado")
-        : "";
-
-      const message = [
-        "*PRÉ-INSCRIÇÃO — CPUSIS CURSOS*",
-        "",
-        "*Empresa:* " + data.company,
-        "*CNPJ:* " + data.cnpj,
-        "*Responsável:* " + data.responsible,
-        "*E-mail:* " + data.email,
-        "*WhatsApp:* " + data.whatsapp,
-        "",
-        "*Participante 1:* " + data.participant1,
-        "*CPF 1:* " + data.cpf1,
-        secondParticipant,
-        "",
-        "*Pagamento:* " + data.payment,
-        "*Pacote:* 8 cursos + bônus — R$ 872,55"
-      ].filter(Boolean).join("\n");
-
-      window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
-      formContent.style.display = "none";
-      success.classList.add("visible");
+      const button=document.querySelector("#payment-button");
+      button.textContent="Criando pagamento seguro...";
+      form.classList.add("loading");
+      try{
+        const response=await fetch(CREATE_PAYMENT_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(values())});
+        const result=await response.json();
+        if(!response.ok||!result.checkout_url) throw new Error(result.error||"Não foi possível criar o pagamento.");
+        window.location.href=result.checkout_url;
+      }catch(error){
+        errorBox.textContent=error.message||"Não foi possível continuar. Tente novamente.";
+        errorBox.style.display="block";
+        button.textContent="Prosseguir para pagamento seguro";
+        form.classList.remove("loading");
+      }
     });
 
-    document.querySelector("#new-registration").addEventListener("click", () => {
-      form.reset();
-      success.classList.remove("visible");
-      formContent.style.display = "block";
-    });
+    const paymentParams=new URLSearchParams(location.search);
+    const paymentStatus=paymentParams.get("payment");
+    const registrationId=paymentParams.get("registration");
+    function setResult(state){
+      const results={
+        paid:["✓","Pagamento confirmado","Sua inscrição foi concluída!","Os links de acesso à plataforma serão enviados para os e-mails e telefones informados no cadastro."],
+        pending:["…","Pagamento em análise","Estamos aguardando a confirmação","Assim que o Mercado Pago confirmar, os acessos serão preparados e enviados aos contatos cadastrados."],
+        failure:["!","Pagamento não concluído","Não foi possível finalizar","Nenhuma confirmação foi registrada. Volte ao início e tente novamente ou fale com a equipe CPUSIS."]
+      };
+      const content=results[state]||results.pending;
+      ["#result-icon","#result-kicker","#result-title","#result-text"].forEach((selector,index)=>document.querySelector(selector).textContent=content[index]);
+    }
+    async function verifyPayment(){
+      if(!registrationId||PAYMENT_STATUS_URL.includes("SUPABASE_")) return;
+      setResult("pending");
+      for(let attempt=0;attempt<8;attempt+=1){
+        try{
+          const response=await fetch(PAYMENT_STATUS_URL+"?registration="+encodeURIComponent(registrationId));
+          const result=await response.json();
+          if(response.ok&&result.status==="paid"){ setResult("paid"); return; }
+          if(response.ok&&["failed","cancelled","refunded"].includes(result.status)){ setResult("failure"); return; }
+        }catch(_error){ /* mantém a tela de análise durante uma falha temporária */ }
+        await new Promise(resolve=>setTimeout(resolve,2500));
+      }
+    }
+    if(paymentStatus){
+      site.classList.add("hidden");
+      document.querySelector("#payment-result").classList.remove("hidden");
+      setResult(paymentStatus==="failure"?"failure":"pending");
+      if(paymentStatus!=="failure") verifyPayment();
+    }
   </script>
 </body>
 </html>
