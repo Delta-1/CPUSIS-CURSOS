@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071525">
+  <meta name="description" content="Formulário de pré-inscrição empresarial para o pacote de cursos fiscais CPUSIS.">
+  <title>CPUSIS Cursos | Pré-inscrição empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-950: #06111f;
+      --navy-900: #091b2e;
+      --navy-800: #102942;
+      --navy-700: #173a5a;
+      --ink: #0b1b2a;
+      --muted: #637181;
+      --line: #dce2e8;
+      --paper: #f5f5f2;
+      --white: #ffffff;
+      --yellow: #f2c84b;
+      --yellow-soft: #fff5cd;
+      --danger: #b42318;
+      --success: #176447;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      background: var(--navy-950);
+    }
+
+    button, input, select { font: inherit; }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 36px;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(90deg, rgba(4, 14, 27, .2), rgba(4, 14, 27, .76) 56%, rgba(4, 14, 27, .94)),
+        url("lighthouse-bg.png") center / cover no-repeat;
+    }
+
+    .page::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 74% 35%, rgba(242, 200, 75, .09), transparent 28%),
+        linear-gradient(180deg, transparent 60%, rgba(2, 10, 19, .54));
+    }
+
+    .shell {
+      width: min(1180px, 100%);
+      display: grid;
+      grid-template-columns: minmax(280px, .72fr) minmax(600px, 1.28fr);
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 28px;
+      background: rgba(7, 21, 37, .52);
+      box-shadow: 0 38px 110px rgba(0, 0, 0, .46);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .context {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 760px;
+      padding: 42px 40px;
+      color: var(--white);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      width: fit-content;
+      color: var(--white);
+      font: 800 1.05rem "Manrope", sans-serif;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .1);
+      color: var(--yellow);
+    }
+
+    .brand-mark svg { width: 21px; }
+
+    .context-copy { max-width: 380px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--yellow);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--yellow);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 440px;
+      color: var(--white);
+      font: 800 clamp(2.25rem, 4.3vw, 4.2rem)/1.02 "Manrope", sans-serif;
+      letter-spacing: -.055em;
+    }
+
+    .context-copy > p {
+      max-width: 380px;
+      margin: 20px 0 0;
+      color: rgba(239, 244, 248, .76);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .offer {
+      display: grid;
+      gap: 10px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .offer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: rgba(255, 255, 255, .72);
+      font-size: .78rem;
+    }
+
+    .offer-row strong { color: var(--white); font-size: .86rem; }
+
+    .spots {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      width: fit-content;
+      margin-top: 6px;
+      padding: 8px 11px;
+      border: 1px solid rgba(242, 200, 75, .28);
+      border-radius: 999px;
+      background: rgba(242, 200, 75, .09);
+      color: var(--yellow);
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    .spots::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 0 5px rgba(242, 200, 75, .13);
+    }
+
+    .form-panel {
+      padding: 40px;
+      background: rgba(247, 248, 246, .98);
+    }
+
+    .form-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .form-header span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--navy-700);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--ink);
+      font: 800 clamp(1.55rem, 2.3vw, 2.15rem)/1.15 "Manrope", sans-serif;
+      letter-spacing: -.035em;
+    }
+
+    .step-pill {
+      flex: 0 0 auto;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    fieldset {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    legend {
+      width: 100%;
+      margin-bottom: 17px;
+      padding: 0 0 11px;
+      border-bottom: 1px solid var(--line);
+      color: var(--navy-800);
+      font: 700 .86rem "Manrope", sans-serif;
+    }
+
+    fieldset + fieldset { margin-top: 28px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      color: #394b5b;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .optional {
+      margin-left: 5px;
+      color: #83909b;
+      font-size: .68rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      height: 47px;
+      border: 1px solid #d5dce2;
+      border-radius: 11px;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+      padding: 0 13px;
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    input::placeholder { color: #a1aab2; }
+
+    input:focus, select:focus {
+      border-color: var(--navy-700);
+      box-shadow: 0 0 0 3px rgba(23, 58, 90, .1);
+    }
+
+    .participant {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfbf9;
+    }
+
+    .participant + .participant { margin-top: 12px; }
+
+    .participant-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 13px;
+      color: var(--navy-800);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .participant-title i {
+      display: grid;
+      place-items: center;
+      width: 23px;
+      height: 23px;
+      border-radius: 7px;
+      background: var(--yellow-soft);
+      color: #8a6900;
+      font-style: normal;
+      font-size: .68rem;
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 19px;
+    }
+
+    .consent input {
+      width: 17px;
+      height: 17px;
+      margin: 2px 0 0;
+      accent-color: var(--navy-800);
+    }
+
+    .consent label {
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 51px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--navy-900);
+      color: var(--white);
+      box-shadow: 0 13px 25px rgba(9, 27, 46, .16);
+      font-weight: 700;
+      transition: transform .18s, background .18s;
+    }
+
+    .submit:hover { transform: translateY(-1px); background: var(--navy-800); }
+    .submit:active { transform: translateY(0); }
+    .submit svg { width: 18px; }
+
+    .helper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin: 11px 0 0;
+      color: #7c8893;
+      font-size: .67rem;
+    }
+
+    .helper svg { width: 13px; }
+
+    .error {
+      display: none;
+      margin: 15px 0 0;
+      padding: 11px 13px;
+      border-radius: 9px;
+      background: #fff0ee;
+      color: var(--danger);
+      font-size: .76rem;
+      font-weight: 600;
+    }
+
+    .success {
+      display: none;
+      min-height: 640px;
+      place-items: center;
+      text-align: center;
+    }
+
+    .success.visible { display: grid; }
+    .success-inner { max-width: 480px; }
+
+    .success-icon {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: var(--yellow-soft);
+      color: #8a6900;
+    }
+
+    .success-icon svg { width: 31px; }
+    .success p { color: var(--muted); line-height: 1.65; }
+
+    .secondary-button {
+      min-height: 44px;
+      margin-top: 18px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      cursor: pointer;
+      background: var(--white);
+      color: var(--navy-800);
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .page { padding: 22px; }
+      .shell { grid-template-columns: 1fr; width: min(700px, 100%); }
+      .context { min-height: 350px; padding: 32px; }
+      .context-copy { margin: 52px 0; }
+      .offer { grid-template-columns: 1fr 1fr; gap: 12px 25px; }
+      .spots { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 620px) {
+      .page { display: block; padding: 0; }
+      .page::before {
+        background:
+          linear-gradient(180deg, rgba(4, 14, 27, .1), rgba(4, 14, 27, .88)),
+          url("lighthouse-bg.png") 28% center / cover no-repeat;
+      }
+      .shell { border: 0; border-radius: 0; box-shadow: none; }
+      .context { min-height: 410px; padding: 25px 21px; }
+      .context-copy { margin: 58px 0 38px; }
+      h1 { max-width: 330px; font-size: 2.65rem; }
+      .context-copy > p { font-size: .91rem; }
+      .offer { grid-template-columns: 1fr; }
+      .form-panel { padding: 30px 19px 38px; }
+      .form-header { align-items: flex-start; flex-direction: column-reverse; gap: 12px; }
+      .grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .participant { padding: 15px; }
+      .step-pill { align-self: flex-end; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="shell" aria-label="Formulário de pré-inscrição">
+      <aside class="context">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M8 21h8M9 21l1-11h4l1 11M10 10V7h4v3M9 7h6l-1-4h-4L9 7Z"/>
+              <path d="M14 7l6-2M14 9l7 1M10 7L4 5"/>
+            </svg>
+          </span>
+          CPUSIS Cursos
+        </div>
+
+        <div class="context-copy">
+          <span class="eyebrow">Inscrição empresarial</span>
+          <h1>Conhecimento que orienta decisões.</h1>
+          <p>Cadastre sua empresa no pacote de formação fiscal e prepare sua equipe para atuar com mais segurança.</p>
+        </div>
+
+        <div class="offer">
+          <div class="offer-row"><span>Investimento</span><strong>R$ 872,55</strong></div>
+          <div class="offer-row"><span>Pagamento</span><strong>até 4x sem juros</strong></div>
+          <div class="offer-row"><span>Participantes</span><strong>2 CPFs por CNPJ</strong></div>
+          <div class="offer-row"><span>Conteúdo</span><strong>8 cursos + bônus</strong></div>
+          <span class="spots">Apenas 40 vagas</span>
+        </div>
+      </aside>
+
+      <section class="form-panel">
+        <div id="form-content">
+          <header class="form-header">
+            <div>
+              <span>Pré-inscrição</span>
+              <h2>Dados da empresa e participantes</h2>
+            </div>
+            <div class="step-pill">Leva menos de 2 min</div>
+          </header>
+
+          <form id="registration-form" novalidate>
+            <fieldset>
+              <legend>Empresa</legend>
+              <div class="grid">
+                <div class="field full">
+                  <label for="company">Razão social ou nome fantasia</label>
+                  <input id="company" name="company" autocomplete="organization" required>
+                </div>
+                <div class="field">
+                  <label for="cnpj">CNPJ</label>
+                  <input id="cnpj" name="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18" required>
+                </div>
+                <div class="field">
+                  <label for="responsible">Responsável pela inscrição</label>
+                  <input id="responsible" name="responsible" autocomplete="name" required>
+                </div>
+                <div class="field">
+                  <label for="email">E-mail corporativo</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="nome@empresa.com.br" required>
+                </div>
+                <div class="field">
+                  <label for="whatsapp">WhatsApp</label>
+                  <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" required>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Participantes</legend>
+              <div class="participant">
+                <div class="participant-title"><i>01</i> Participante principal</div>
+                <div class="grid">
+                  <div class="field">
+                    <label for="participant1">Nome completo</label>
+                    <input id="participant1" name="participant1" autocomplete="name" required>
+                  </div>
+                  <div class="field">
+                    <label for="cpf1">CPF</label>
+                    <input id="cpf1" name="cpf1" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="participant">
+                <div class="participant-title"><i>02</i> Segundo participante <span class="optional">opcional</span></div>
+                <div class="grid">
+                  <div class="field">
+                    <label for="participant2">Nome completo</label>
+                    <input id="participant2" name="participant2">
+                  </div>
+                  <div class="field">
+                    <label for="cpf2">CPF</label>
+                    <input id="cpf2" name="cpf2" inputmode="numeric" placeholder="000.000.000-00" maxlength="14">
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Pagamento</legend>
+              <div class="field">
+                <label for="payment">Como prefere pagar?</label>
+                <select id="payment" name="payment" required>
+                  <option value="">Selecione uma opção</option>
+                  <option>Cartão em 1x</option>
+                  <option>Cartão em 2x sem juros</option>
+                  <option>Cartão em 3x sem juros</option>
+                  <option>Cartão em 4x sem juros</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <div class="consent">
+              <input id="consent" name="consent" type="checkbox" required>
+              <label for="consent">Autorizo o contato da equipe CPUSIS sobre esta pré-inscrição e confirmo que os dados informados estão corretos.</label>
+            </div>
+
+            <div class="error" id="error" role="alert"></div>
+
+            <button class="submit" type="submit">
+              Enviar inscrição pelo WhatsApp
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+
+            <p class="helper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+              </svg>
+              Seus dados são usados somente para o atendimento desta inscrição.
+            </p>
+          </form>
+        </div>
+
+        <div class="success" id="success" aria-live="polite">
+          <div class="success-inner">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12 4 4L19 6"/></svg>
+            </div>
+            <h2>Inscrição preparada!</h2>
+            <p>O WhatsApp foi aberto com todos os dados preenchidos. Escolha o contato da CPUSIS e envie a mensagem para concluir.</p>
+            <button class="secondary-button" id="new-registration" type="button">Fazer nova inscrição</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#registration-form");
+    const errorBox = document.querySelector("#error");
+    const formContent = document.querySelector("#form-content");
+    const success = document.querySelector("#success");
+
+    function onlyDigits(value) {
+      return value.replace(/\D/g, "");
+    }
+
+    function formatCnpj(value) {
+      const digits = onlyDigits(value).slice(0, 14);
+      return digits
+        .replace(/^(\d{2})(\d)/, "$1.$2")
+        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+        .replace(/\.(\d{3})(\d)/, ".$1/$2")
+        .replace(/(\d{4})(\d)/, "$1-$2");
+    }
+
+    function formatCpf(value) {
+      const digits = onlyDigits(value).slice(0, 11);
+      return digits
+        .replace(/^(\d{3})(\d)/, "$1.$2")
+        .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+        .replace(/\.(\d{3})(\d)/, ".$1-$2");
+    }
+
+    function formatPhone(value) {
+      const digits = onlyDigits(value).slice(0, 11);
+      return digits.length <= 10
+        ? digits.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2")
+        : digits.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2");
+    }
+
+    document.querySelector("#cnpj").addEventListener("input", event => {
+      event.target.value = formatCnpj(event.target.value);
+    });
+
+    ["#cpf1", "#cpf2"].forEach(selector => {
+      document.querySelector(selector).addEventListener("input", event => {
+        event.target.value = formatCpf(event.target.value);
+      });
+    });
+
+    document.querySelector("#whatsapp").addEventListener("input", event => {
+      event.target.value = formatPhone(event.target.value);
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      errorBox.style.display = "none";
+
+      if (!form.checkValidity()) {
+        errorBox.textContent = "Preencha os campos obrigatórios antes de continuar.";
+        errorBox.style.display = "block";
+        form.reportValidity();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      const secondParticipant = data.participant2
+        ? "\n*Participante 2:* " + data.participant2 + "\n*CPF 2:* " + (data.cpf2 || "Não informado")
+        : "";
+
+      const message = [
+        "*PRÉ-INSCRIÇÃO — CPUSIS CURSOS*",
+        "",
+        "*Empresa:* " + data.company,
+        "*CNPJ:* " + data.cnpj,
+        "*Responsável:* " + data.responsible,
+        "*E-mail:* " + data.email,
+        "*WhatsApp:* " + data.whatsapp,
+        "",
+        "*Participante 1:* " + data.participant1,
+        "*CPF 1:* " + data.cpf1,
+        secondParticipant,
+        "",
+        "*Pagamento:* " + data.payment,
+        "*Pacote:* 8 cursos + bônus — R$ 872,55"
+      ].filter(Boolean).join("\n");
+
+      window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
+      formContent.style.display = "none";
+      success.classList.add("visible");
+    });
+
+    document.querySelector("#new-registration").addEventListener("click", () => {
+      form.reset();
+      success.classList.remove("visible");
+      formContent.style.display = "block";
+    });
+  </script>
+</body>
+</html>
