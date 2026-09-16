@@ -96,7 +96,7 @@ Deno.serve(async (req: Request) => {
       updated_at: new Date().toISOString(),
     }).eq("id", registration.id);
 
-    const sandbox = Deno.env.get("MP_ENV") === "sandbox";
+    const sandbox = Deno.env.get("MP_ENV") !== "production";
     return json({
       registration_id: registration.id,
       checkout_url: sandbox ? preference.sandbox_init_point : preference.init_point,
