@@ -19,6 +19,13 @@ export function digits(value: unknown) {
 }
 
 export function secretKey() {
+  const keySet = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (keySet) {
+    try {
+      const parsed = JSON.parse(keySet);
+      if (parsed.default) return String(parsed.default);
+    } catch { /* usa as variáveis compatíveis abaixo */ }
+  }
   const modern = Deno.env.get("SUPABASE_SECRET_KEY");
   const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!modern && !legacy) throw new Error("Supabase secret key is not configured");

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071525">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>CPUSIS | Área administrativa</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#071525;--navy2:#102942;--yellow:#f2c84b;--paper:#f3f4f1;--white:#fff;--ink:#13202c;--muted:#667481;--line:#dce2e6;--danger:#b42318;--success:#176447}
+    *{box-sizing:border-box}body{margin:0;min-width:320px;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}button,input{font:inherit}.hidden{display:none!important}
+    .login-page{min-height:100svh;display:grid;place-items:center;padding:24px;background:linear-gradient(110deg,rgba(5,17,31,.76),rgba(5,17,31,.96)),url("lighthouse-bg.jpg") center/cover}
+    .login-card{width:min(430px,100%);padding:34px;border:1px solid rgba(255,255,255,.18);border-radius:22px;background:rgba(7,21,37,.82);box-shadow:0 28px 80px rgba(0,0,0,.38);backdrop-filter:blur(16px);color:#fff}
+    .brand{display:flex;align-items:center;gap:11px;font:800 1rem "Manrope",sans-serif}.brand img{width:39px;height:39px}.kicker{display:block;margin-top:38px;color:var(--yellow);font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    h1{margin:9px 0 8px;font:800 2.15rem/1.05 "Manrope",sans-serif;letter-spacing:-.045em}.login-card>p{margin:0 0 25px;color:#acbbc5;line-height:1.6;font-size:.88rem}
+    .field{display:grid;gap:7px;margin-top:14px}.field label{font-size:.75rem;font-weight:700;color:#d8e2e8}.field input{height:49px;border:1px solid rgba(255,255,255,.2);border-radius:11px;outline:none;background:rgba(255,255,255,.08);color:#fff;padding:0 13px}.field input:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(242,200,75,.14)}
+    .login-button{width:100%;min-height:50px;margin-top:21px;border:0;border-radius:11px;background:var(--yellow);color:#29230b;font-weight:800;cursor:pointer}.error{display:none;margin-top:14px;padding:11px;border-radius:9px;background:#fff0ee;color:var(--danger);font-size:.78rem;font-weight:700}
+    .dashboard{min-height:100vh}.topbar{padding:19px max(22px,calc((100% - 1320px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--navy);color:#fff}.topbar-actions{display:flex;align-items:center;gap:10px}.topbar button{min-height:39px;padding:0 14px;border:1px solid rgba(255,255,255,.2);border-radius:9px;background:rgba(255,255,255,.07);color:#fff;cursor:pointer;font-weight:700}.topbar .export{border:0;background:var(--yellow);color:#30280b}
+    main{width:min(1320px,calc(100% - 40px));margin:auto;padding:48px 0 70px}.heading{display:flex;align-items:end;justify-content:space-between;gap:25px}.heading span{color:var(--navy2);font-size:.72rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.heading h2{margin:8px 0 0;font:800 clamp(2rem,4vw,3.6rem)/1 "Manrope",sans-serif;letter-spacing:-.05em}.heading p{margin:0;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:31px 0}.stat{padding:20px;border:1px solid var(--line);border-radius:14px;background:#fff}.stat span{display:block;color:var(--muted);font-size:.74rem;font-weight:700}.stat strong{display:block;margin-top:9px;font:800 2rem "Manrope",sans-serif}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}.search{width:min(430px,100%);height:45px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 13px;outline:none}.search:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(16,41,66,.09)}
+    .table-shell{overflow:auto;border:1px solid var(--line);border-radius:15px;background:#fff;box-shadow:0 12px 30px rgba(10,25,38,.05)}table{width:100%;min-width:1160px;border-collapse:collapse}th,td{padding:14px 15px;border-bottom:1px solid #edf0f2;text-align:left;vertical-align:top;font-size:.78rem}th{position:sticky;top:0;background:#f8f9f7;color:#5c6974;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}td strong{display:block;margin-bottom:3px}td small{display:block;color:var(--muted);line-height:1.45}.status{display:inline-flex;padding:6px 9px;border-radius:999px;background:#edf1f4;color:#42515e;font-size:.68rem;font-weight:800}.status.paid{background:#e6f5ee;color:var(--success)}.empty{padding:42px;text-align:center;color:var(--muted)}
+    @media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.heading{align-items:flex-start;flex-direction:column}.topbar{align-items:flex-start;flex-direction:column}.topbar-actions{width:100%;flex-wrap:wrap}.topbar-actions button{flex:1}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}}
+    @media(max-width:480px){.login-card{padding:27px 21px}.stats{grid-template-columns:1fr 1fr}main{width:min(100% - 28px,1320px);padding-top:34px}}
+  </style>
+</head>
+<body>
+  <section class="login-page" id="login-page">
+    <form class="login-card" id="login-form">
+      <div class="brand"><img src="favicon.svg" alt=""> CPUSIS Cursos</div>
+      <span class="kicker">Acesso reservado</span>
+      <h1>Área administrativa</h1>
+      <p>Consulte os cadastros da campanha e exporte os contatos com segurança.</p>
+      <div class="field"><label for="username">Nome de acesso</label><input id="username" autocomplete="username" required></div>
+      <div class="field"><label for="password">Senha</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <button class="login-button" id="login-button" type="submit">Entrar</button>
+      <div class="error" id="login-error" role="alert"></div>
+    </form>
+  </section>
+
+  <section class="dashboard hidden" id="dashboard">
+    <header class="topbar">
+      <div class="brand"><img src="favicon.svg" alt=""> CPUSIS Cursos · Administração</div>
+      <div class="topbar-actions"><span id="session-user"></span><button class="export" id="export-button" type="button">Exportar CSV</button><button id="refresh-button" type="button">Atualizar</button><button id="logout-button" type="button">Sair</button></div>
+    </header>
+    <main>
+      <div class="heading"><div><span>Campanha empresarial</span><h2>Cadastros recebidos</h2></div><p id="updated-at">Carregando informações...</p></div>
+      <div class="stats"><div class="stat"><span>Empresas</span><strong id="stat-companies">—</strong></div><div class="stat"><span>Funcionários</span><strong id="stat-people">—</strong></div><div class="stat"><span>Pagamentos aprovados</span><strong id="stat-paid">—</strong></div><div class="stat"><span>Pendentes</span><strong id="stat-pending">—</strong></div></div>
+      <div class="toolbar"><input class="search" id="search" type="search" placeholder="Buscar empresa, CNPJ, nome, e-mail ou telefone"><span id="result-count"></span></div>
+      <div class="table-shell"><table><thead><tr><th>Cadastro</th><th>Empresa</th><th>Responsável</th><th>Funcionário 1</th><th>Funcionário 2</th><th>Situação</th></tr></thead><tbody id="records-body"></tbody></table><div class="empty hidden" id="empty">Nenhum cadastro encontrado.</div></div>
+    </main>
+  </section>
+
+  <script>
+    const LOGIN_URL="https://rtrzawfoaistajtpixem.supabase.co/functions/v1/admin-login";
+    const RECORDS_URL="https://rtrzawfoaistajtpixem.supabase.co/functions/v1/admin-records";
+    const tokenKey="cpusis_admin_session";
+    let records=[];
+    const $=selector=>document.querySelector(selector);
+    const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
+    const participant=(record,slot)=>(record.participants||[]).find(item=>Number(item.slot)===slot)||{};
+    const statusLabel={paid:"Pago",payment_pending:"Em análise",pending_payment:"Cadastro recebido",failed:"Falhou",cancelled:"Cancelado",refunded:"Estornado"};
+    function showLogin(){ $("#dashboard").classList.add("hidden");$("#login-page").classList.remove("hidden");sessionStorage.removeItem(tokenKey); }
+    function showDashboard(username){ $("#login-page").classList.add("hidden");$("#dashboard").classList.remove("hidden");$("#session-user").textContent=username; }
+    async function api(url,options={}){ const response=await fetch(url,options);const data=await response.json();if(!response.ok)throw Object.assign(new Error(data.error||"Não foi possível concluir."),{status:response.status});return data; }
+    $("#login-form").addEventListener("submit",async event=>{event.preventDefault();const button=$("#login-button"),error=$("#login-error");button.disabled=true;button.textContent="Verificando...";error.style.display="none";try{const data=await api(LOGIN_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:$("#username").value,password:$("#password").value})});sessionStorage.setItem(tokenKey,data.token);showDashboard(data.username);await loadRecords();}catch(err){error.textContent=err.message;error.style.display="block";}finally{button.disabled=false;button.textContent="Entrar";}});
+    async function loadRecords(){const token=sessionStorage.getItem(tokenKey);if(!token)return showLogin();try{const data=await api(RECORDS_URL,{headers:{Authorization:"Bearer "+token}});records=data.records||[];render(records);$("#updated-at").textContent="Atualizado em "+new Date().toLocaleString("pt-BR");}catch(err){if(err.status===401)return showLogin();alert(err.message);}}
+    function contact(person){return `<strong>${escapeHtml(person.full_name||person.name||"—")}</strong><small>${escapeHtml(person.email||"—")}</small><small>${escapeHtml(person.phone||"—")}</small>${person.cpf?`<small>CPF: ${escapeHtml(person.cpf)}</small>`:""}`;}
+    function render(list){$("#stat-companies").textContent=records.length;$("#stat-people").textContent=records.length*2;$("#stat-paid").textContent=records.filter(r=>r.status==="paid").length;$("#stat-pending").textContent=records.filter(r=>["pending_payment","payment_pending"].includes(r.status)).length;$("#result-count").textContent=list.length+" resultado(s)";$("#empty").classList.toggle("hidden",list.length>0);$("#records-body").innerHTML=list.map(record=>{const p1=participant(record,1),p2=participant(record,2);return `<tr><td><strong>${new Date(record.created_at).toLocaleDateString("pt-BR")}</strong><small>${escapeHtml(record.id)}</small></td><td><strong>${escapeHtml(record.company_name)}</strong><small>CNPJ: ${escapeHtml(record.cnpj)}</small></td><td>${contact({name:record.owner_name,email:record.owner_email,phone:record.owner_phone})}</td><td>${contact(p1)}</td><td>${contact(p2)}</td><td><span class="status ${record.status}">${escapeHtml(statusLabel[record.status]||record.status)}</span></td></tr>`;}).join("");}
+    $("#search").addEventListener("input",event=>{const term=event.target.value.toLowerCase().replace(/\s/g,"");const filtered=records.filter(record=>JSON.stringify(record).toLowerCase().replace(/\s/g,"").includes(term));render(filtered);});
+    function csvCell(value){let text=String(value??"");if(/^[=+\-@]/.test(text))text="'"+text;return '"'+text.replace(/"/g,'""')+'"';}
+    $("#export-button").addEventListener("click",()=>{const header=["Data","Empresa","CNPJ","Responsável","E-mail responsável","Telefone responsável","Funcionário 1","CPF 1","E-mail 1","Telefone 1","Funcionário 2","CPF 2","E-mail 2","Telefone 2","Situação"];const rows=records.map(r=>{const p1=participant(r,1),p2=participant(r,2);return [new Date(r.created_at).toLocaleString("pt-BR"),r.company_name,r.cnpj,r.owner_name,r.owner_email,r.owner_phone,p1.full_name,p1.cpf,p1.email,p1.phone,p2.full_name,p2.cpf,p2.email,p2.phone,statusLabel[r.status]||r.status];});const csv="\uFEFF"+[header,...rows].map(row=>row.map(csvCell).join(";")).join("\r\n");const link=document.createElement("a");link.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));link.download="cpusis-cadastros-"+new Date().toISOString().slice(0,10)+".csv";link.click();URL.revokeObjectURL(link.href);});
+    $("#refresh-button").addEventListener("click",loadRecords);$("#logout-button").addEventListener("click",showLogin);
+    if(sessionStorage.getItem(tokenKey)){showDashboard("Sessão ativa");loadRecords();}
+  </script>
+</body>
+</html>

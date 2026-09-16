@@ -26,3 +26,7 @@ O token privado do Mercado Pago nunca deve ser salvo no GitHub ou inserido no HT
 - Uma empresa cadastra exatamente dois funcionários.
 - O curso bônus aparece apenas como “Curso bônus”.
 - A tela só confirma a inscrição depois de consultar o status gravado pelo webhook.
+
+## Área administrativa
+
+A página `admin.html` não é vinculada na landing page. Ela consulta os cadastros por Edge Functions protegidas por sessão temporária e exporta um CSV compatível com Excel e Google Sheets. Cadastre `ADMIN_PASSWORD` nos Secrets do Supabase; nunca salve essa senha no repositório.
