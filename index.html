@@ -72,6 +72,7 @@
       padding:9px 12px; border:1px solid rgba(255,255,255,.16); border-radius:999px;
       background:rgba(255,255,255,.07); color:#e5edf2; font-size:.76rem; font-weight:700;
     }
+    .offer-wrap { position:relative; padding-top:24px; }
     .offer-card {
       padding:34px; border:1px solid rgba(255,255,255,.2); border-radius:24px;
       background:rgba(7,23,40,.63); box-shadow:0 30px 80px rgba(0,0,0,.34); backdrop-filter:blur(15px);
@@ -84,8 +85,13 @@
     .price small { font-size:.4em; vertical-align:42%; }
     .installments { color:#d8e3e9; line-height:1.5; }
     .saving {
-      margin:22px 0 15px; padding:12px 14px; border-radius:10px;
-      background:var(--yellow); color:#2e290c; font-size:.8rem; font-weight:800; text-align:center;
+      position:absolute; top:0; right:22px; z-index:2; padding:11px 16px; border-radius:999px;
+      background:var(--yellow); color:#2e290c; font-size:.78rem; font-weight:800; text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.28); animation:saving-bounce 2.2s ease-in-out infinite;
+    }
+    @keyframes saving-bounce {
+      0%,100% { transform:translateY(0) rotate(1deg); }
+      50% { transform:translateY(-9px) rotate(-1deg); }
     }
     .cta {
       width:100%; min-height:54px; border:0; border-radius:12px; background:var(--white);
@@ -195,7 +201,7 @@
 
     @media(max-width:1000px) {
       .hero-content { grid-template-columns:1fr; padding-top:45px; }
-      .offer-card { max-width:570px; }
+      .offer-wrap,.offer-card { max-width:570px; }
       .course-grid { grid-template-columns:repeat(2,1fr); }
     }
     @media(max-width:680px) {
@@ -223,7 +229,7 @@
       .btn-pay { flex-basis:100%; order:-1; }
       .result-card { padding:35px 22px; }
     }
-    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition:none!important; } }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
   </style>
 </head>
 <body>
@@ -252,16 +258,18 @@
           </div>
         </div>
 
-        <aside class="offer-card">
-          <span class="offer-label">Oportunidade limitada</span>
-          <div class="old-price">De <s>R$ 6.576,00</s></div>
-          <div class="price-note">por apenas</div>
-          <div class="price"><small>R$</small> 872<small>,55</small></div>
-          <div class="installments">em até <strong>4x sem juros</strong> no cartão</div>
+        <div class="offer-wrap">
           <div class="saving">Você economiza R$ 5.703,45</div>
-          <button class="cta" id="open-form" type="button">Aproveitar oportunidade</button>
-          <p class="microcopy">Ao continuar, você cadastrará a empresa e os dois participantes.</p>
-        </aside>
+          <aside class="offer-card">
+            <span class="offer-label">Oportunidade limitada</span>
+            <div class="old-price">De <s>R$ 6.576,00</s></div>
+            <div class="price-note">por apenas</div>
+            <div class="price"><small>R$</small> 872<small>,55</small></div>
+            <div class="installments">em até <strong>4x sem juros</strong> no cartão</div>
+            <button class="cta" id="open-form" type="button">Aproveitar oportunidade</button>
+            <p class="microcopy">Ao continuar, você cadastrará a empresa e os dois participantes.</p>
+          </aside>
+        </div>
       </div>
     </section>
 
