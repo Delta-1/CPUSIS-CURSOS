@@ -17,6 +17,12 @@ function validate(input: RegistrationPayload) {
   if ([input.owner_email, input.employee1_email, input.employee2_email].some((email) => !/^\S+@\S+\.\S+$/.test(email))) throw new Error("Informe endereços de e-mail válidos.");
 }
 
+function errorMessage(error: unknown) {
+  if (error instanceof Error && error.message) return error.message;
+  if (error && typeof error === "object" && "message" in error && typeof error.message === "string") return error.message;
+  return "Não foi possível criar o pagamento. Tente novamente.";
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Método não permitido." }, 405);
@@ -103,6 +109,6 @@ Deno.serve(async (req: Request) => {
     });
   } catch (error) {
     console.error(error);
-    return json({ error: error instanceof Error ? error.message : "Erro inesperado." }, 400);
+    return json({ error: errorMessage(error) }, 400);
   }
 });
