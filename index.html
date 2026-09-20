@@ -25,6 +25,39 @@
     a { color:inherit; text-decoration:none; }
     .hidden { display:none!important; }
 
+    .countdown-strip {
+      position:relative; z-index:8; overflow:hidden; color:var(--navy-950); background:var(--yellow);
+      border-bottom:1px solid rgba(7,21,37,.2); box-shadow:0 8px 28px rgba(0,0,0,.2);
+    }
+    .countdown-strip::after {
+      content:""; position:absolute; inset:-80% auto -80% -25%; width:18%; pointer-events:none;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+      transform:skewX(-18deg); animation:countdown-shine 4.2s ease-in-out infinite;
+    }
+    .countdown-inner {
+      width:min(1240px,calc(100% - 48px)); min-height:82px; margin:auto; padding:11px 0;
+      display:flex; align-items:center; justify-content:space-between; gap:26px;
+    }
+    .deadline-message { display:flex; align-items:center; gap:13px; }
+    .urgent-dot {
+      position:relative; flex:0 0 auto; width:11px; height:11px; border-radius:50%; background:var(--navy-950);
+      box-shadow:0 0 0 6px rgba(7,21,37,.12); animation:urgent-pulse 1.5s ease-out infinite;
+    }
+    .deadline-message strong { display:block; font:800 clamp(.9rem,1.6vw,1.08rem) "Manrope",sans-serif; }
+    .deadline-message small { display:block; margin-top:3px; color:rgba(7,21,37,.72); font-size:.72rem; font-weight:700; }
+    .countdown-clock { display:flex; align-items:center; gap:7px; }
+    .time-unit {
+      min-width:61px; padding:7px 9px; border:1px solid rgba(7,21,37,.18); border-radius:10px;
+      background:rgba(255,255,255,.36); text-align:center;
+    }
+    .time-unit strong { display:block; font:800 1.35rem/1 "Manrope",sans-serif; font-variant-numeric:tabular-nums; }
+    .time-unit span { display:block; margin-top:4px; font-size:.55rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .time-separator { font:800 1.15rem "Manrope",sans-serif; opacity:.48; }
+    .countdown-strip.expired .urgent-dot { animation:none; }
+    .countdown-strip.expired .countdown-clock { font-weight:800; }
+    @keyframes countdown-shine { 0%,55% { left:-25%; } 85%,100% { left:125%; } }
+    @keyframes urgent-pulse { 0% { box-shadow:0 0 0 0 rgba(7,21,37,.32); } 100% { box-shadow:0 0 0 11px rgba(7,21,37,0); } }
+
     .hero {
       position:relative; min-height:100svh; isolation:isolate; overflow:hidden;
       color:var(--white); background:var(--navy-950);
@@ -205,6 +238,12 @@
       .course-grid { grid-template-columns:repeat(2,1fr); }
     }
     @media(max-width:680px) {
+      .countdown-inner { width:min(100% - 24px,1240px); padding:12px 0; flex-direction:column; gap:10px; }
+      .deadline-message { width:100%; justify-content:center; text-align:center; }
+      .deadline-message small { font-size:.66rem; }
+      .countdown-clock { width:100%; justify-content:center; gap:4px; }
+      .time-unit { min-width:57px; padding:7px 6px; }
+      .time-unit strong { font-size:1.18rem; }
       .nav,.hero-content { width:min(100% - 32px,1240px); }
       .nav-note { display:none; }
       .hero-content { padding-bottom:75px; }
@@ -235,6 +274,20 @@
 <body>
   <div id="site">
     <section class="hero">
+      <div class="countdown-strip" id="countdown-strip">
+        <div class="countdown-inner">
+          <div class="deadline-message">
+            <span class="urgent-dot" aria-hidden="true"></span>
+            <div><strong id="deadline-title">Últimas vagas: inscrições encerram neste sábado</strong><small>Até 26/09, às 23h · horário do Acre · limite de 40 empresas</small></div>
+          </div>
+          <div class="countdown-clock" id="countdown-clock" role="timer" aria-label="Tempo restante para o fim das inscrições">
+            <div class="time-unit"><strong id="countdown-days">00</strong><span>Dias</span></div><span class="time-separator">:</span>
+            <div class="time-unit"><strong id="countdown-hours">00</strong><span>Horas</span></div><span class="time-separator">:</span>
+            <div class="time-unit"><strong id="countdown-minutes">00</strong><span>Min</span></div><span class="time-separator">:</span>
+            <div class="time-unit"><strong id="countdown-seconds">00</strong><span>Seg</span></div>
+          </div>
+        </div>
+      </div>
       <nav class="nav">
         <a class="brand" href="#" aria-label="CPUSIS Cursos">
           <span class="brand-mark" aria-hidden="true">
@@ -369,6 +422,28 @@
   </section>
 
   <script>
+    const ENROLLMENT_DEADLINE = new Date("2026-09-26T23:00:00-05:00").getTime();
+    function updateCountdown(){
+      const remaining=ENROLLMENT_DEADLINE-Date.now();
+      if(remaining<=0){
+        document.querySelector("#countdown-strip").classList.add("expired");
+        document.querySelector("#deadline-title").textContent="Prazo encerrado — consulte a disponibilidade de vagas";
+        document.querySelector("#countdown-clock").innerHTML="Inscrições encerradas";
+        return false;
+      }
+      const totalSeconds=Math.floor(remaining/1000);
+      const values={
+        days:Math.floor(totalSeconds/86400),
+        hours:Math.floor(totalSeconds%86400/3600),
+        minutes:Math.floor(totalSeconds%3600/60),
+        seconds:totalSeconds%60
+      };
+      Object.entries(values).forEach(([unit,value])=>document.querySelector("#countdown-"+unit).textContent=String(value).padStart(2,"0"));
+      return true;
+    }
+    updateCountdown();
+    const countdownInterval=setInterval(()=>{ if(!updateCountdown()) clearInterval(countdownInterval); },1000);
+
     const CREATE_PAYMENT_URL = "https://rtrzawfoaistajtpixem.supabase.co/functions/v1/create-payment";
     const PAYMENT_STATUS_URL = "https://rtrzawfoaistajtpixem.supabase.co/functions/v1/payment-status";
     const form = document.querySelector("#registration-form");
