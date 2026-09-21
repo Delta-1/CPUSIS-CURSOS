@@ -278,7 +278,7 @@
         <div class="countdown-inner">
           <div class="deadline-message">
             <span class="urgent-dot" aria-hidden="true"></span>
-            <div><strong id="deadline-title">Últimas vagas: inscrições encerram neste sábado</strong><small>Até 26/09, às 23h · horário do Acre · limite de 40 empresas</small></div>
+            <div><strong id="deadline-title">Últimas vagas: inscrições encerram em breve</strong><small id="deadline-detail">Carregando o prazo da campanha...</small></div>
           </div>
           <div class="countdown-clock" id="countdown-clock" role="timer" aria-label="Tempo restante para o fim das inscrições">
             <div class="time-unit"><strong id="countdown-days">00</strong><span>Dias</span></div><span class="time-separator">:</span>
@@ -422,13 +422,22 @@
   </section>
 
   <script>
-    const ENROLLMENT_DEADLINE = new Date("2026-09-26T23:00:00-05:00").getTime();
+    const CAMPAIGN_SETTINGS_URL = "https://rtrzawfoaistajtpixem.supabase.co/functions/v1/campaign-settings";
+    let enrollmentDeadline = new Date("2026-09-26T23:00:00-05:00").getTime();
+    let countdownEnabled = true;
     function updateCountdown(){
-      const remaining=ENROLLMENT_DEADLINE-Date.now();
+      if(!countdownEnabled){ document.querySelector("#countdown-strip").classList.add("hidden"); return true; }
+      document.querySelector("#countdown-strip").classList.remove("hidden");
+      document.querySelector("#countdown-clock").removeAttribute("aria-label");
+      const remaining=enrollmentDeadline-Date.now();
       if(remaining<=0){
         document.querySelector("#countdown-strip").classList.add("expired");
         document.querySelector("#deadline-title").textContent="Prazo encerrado — consulte a disponibilidade de vagas";
-        document.querySelector("#countdown-clock").innerHTML="Inscrições encerradas";
+        ["days","hours","minutes","seconds"].forEach(unit=>{
+          const element=document.querySelector(`#countdown-${unit}`);
+          if(element) element.textContent="00";
+        });
+        document.querySelector("#countdown-clock").setAttribute("aria-label","Inscrições encerradas");
         return false;
       }
       const totalSeconds=Math.floor(remaining/1000);
@@ -441,8 +450,27 @@
       Object.entries(values).forEach(([unit,value])=>document.querySelector("#countdown-"+unit).textContent=String(value).padStart(2,"0"));
       return true;
     }
+    function deadlineText(iso,timezone){
+      const parts=new Intl.DateTimeFormat("pt-BR",{timeZone:timezone,weekday:"long",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
+      return "Até "+parts+" · horário do Acre · limite de 40 empresas";
+    }
+    async function loadCountdownSettings(){
+      try{
+        const response=await fetch(CAMPAIGN_SETTINGS_URL,{cache:"no-store"});
+        const result=await response.json();
+        if(!response.ok||!result.settings) return;
+        enrollmentDeadline=new Date(result.settings.enrollment_deadline).getTime();
+        countdownEnabled=result.settings.countdown_enabled;
+        document.querySelector("#deadline-title").textContent="Últimas vagas: inscrições encerram em breve";
+        document.querySelector("#deadline-detail").textContent=deadlineText(result.settings.enrollment_deadline,result.settings.timezone||"America/Rio_Branco");
+        document.querySelector("#countdown-strip").classList.remove("expired");
+        updateCountdown();
+      }catch(_error){ document.querySelector("#deadline-detail").textContent="Prazo limitado · apenas 40 empresas"; }
+    }
     updateCountdown();
-    const countdownInterval=setInterval(()=>{ if(!updateCountdown()) clearInterval(countdownInterval); },1000);
+    setInterval(updateCountdown,1000);
+    loadCountdownSettings();
+    setInterval(loadCountdownSettings,60000);
 
     const CREATE_PAYMENT_URL = "https://rtrzawfoaistajtpixem.supabase.co/functions/v1/create-payment";
     const PAYMENT_STATUS_URL = "https://rtrzawfoaistajtpixem.supabase.co/functions/v1/payment-status";
