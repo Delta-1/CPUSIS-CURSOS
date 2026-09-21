@@ -12,3 +12,6 @@ verify_jwt = false
 
 [functions.admin-records]
 verify_jwt = false
+
+[functions.campaign-settings]
+verify_jwt = false
